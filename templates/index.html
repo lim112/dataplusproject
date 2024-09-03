@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울시의 문화 활동 그래프</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #3fb1a0;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background: #024a47;
+        }
+    </style>
+    <script>
+        function updateSubcategories() {
+            const category = document.getElementById('category').value;
+            const subCategory = document.getElementById('subcategory');
+            const options = {
+                '전체': ['전체'],
+                '성별': ['남성', '여성'],
+                '연령대': ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
+                '지역구': ['종로구', '중구', '용산구', '성동구', '광진구', '동대문구',
+                '중랑구', '성북구', '강북구', '도봉구', '노원구', '은평구', '서대문구',
+                '마포구', '양천구', '강서구', '구로구','금천구', '영등포구', '동작구',
+                '관악구', '서초구', '강남구', '송파구', '강동구']
+            };
+
+            subCategory.innerHTML = '';  // 기존 옵션 제거
+
+            // 새로운 옵션 추가
+            options[category].forEach(function(option) {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.innerHTML = option;
+                subCategory.appendChild(opt);
+            });
+
+                subCategory.disabled = false;
+            
+        }
+
+        window.onload = function() {
+            updateSubcategories(); // 페이지 로드 시 옵션 설정
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>서울시의 문화 활동 그래프</h1>
+        <form action="/plot" method="get">
+            <div class="form-group">
+                <label for="category">분류 선택:</label>
+                <select name="category" id="category" onchange="updateSubcategories()">
+                    <option value="전체">전체</option>
+                    <option value="성별">성별</option>
+                    <option value="연령대">연령대</option>
+                    <option value="지역구">지역구</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subcategory">세부사항 선택:</label>
+                <select name="subcategory" id="subcategory" disabled>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cul_type">문화생활 종류 선택:</label>
+                <select name="cul_type" id="cul_type">
+                    <option value="전시회">전시회</option>
+                    <option value="박물관">박물관</option>
+                    <option value="음악">음악 및 무용발표회</option>
+                    <option value="전통예술공연">전통예술공연</option>
+                    <option value="연극공연">연극공연</option>
+                    <option value="영화관람">영화관람</option>
+                    <option value="대중공연">대중공연</option>
+                    <option value="운동경기">운동경기</option>
+                </select>
+            </div>
+            <button type="submit">실행</button>
+        </form>
+    </div>
+</body>
+</html>
